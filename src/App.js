@@ -15,7 +15,7 @@ import Login from "./pages/login";
 import Register from "./pages/register"
 import Navbar from "./components/navbar"
 import Footer from "./components/footer";   
-import "react-toastify/dist/ReactToastify.css";
+import ActivationEmail from "./auth/ActivationEmail";
 
 function App() {
   return (
@@ -26,11 +26,11 @@ function App() {
        
     <Routes>
         <Route path="/" element = {<Home/>}/>
-        <Route path="/products" element = { <Products />}/>
+        <Route path= "/products" element = { <Products />}/>
         <Route path="/aboutus" element = { <Aboutus />}/>
         <Route path="/login" element = { <Login />}/>
         <Route path="/register" element = {<Register/>}/>
-     
+        <Route path="/activate/:activation_token" element={<ActivationEmail/>}/>
        
      </Routes>
         <Footer/>

@@ -1,10 +1,18 @@
 const express = require('express');
+require('dotenv').config()
 const cors= require('cors')
 const mongoose = require('mongoose');
 const authRoutes = require('./Routes/Authroute')
+const adminRoutes = require("./Routes/categoryRouter")
+const uploadRoutes = require("./Routes/upload")
+const productRoutes = require("./Routes/productRouter")
 const app = express();
 const cookieParser = require("cookie-parser");
+const fileUpload = require("express-fileupload");
 
+app.use(fileUpload({
+    useTempFiles:true
+}))
 app.use(
     cors({
     origin: "*",
@@ -12,71 +20,33 @@ app.use(
     credentials: true
 }))
 app.use(express.urlencoded());
+app.use(cookieParser());
+app.use(express.json())
 
-mongoose.connect('mongodb://localhost:27017/Authentication',{
+app.use('/',authRoutes);
+
+app.use('/admin',adminRoutes)
+
+app.use("/api",uploadRoutes)
+
+app.use("/checkproducts",productRoutes)
+
+const URI = process.env.MONGODB_URL
+
+mongoose.connect(URI,{
     useNewUrlparser:true,
     useUnifiedTopology:true
+    // useCreateIndex:true,
+    // useFindAndModify:false
 
 })
 .then(()=>{
     console.log("Database connection successfull")
 
 }).catch((err)=>{
-    // console.log(err);
+    console.log(err);
 })
   
-
-
-// const userSchema = new mongoose.Schema({
-//     firstName: String,
-//     lastName:String,
-//     userName:String,
-//     mobileNumber:Number,
-//     email: String,
-//     password: String
-// })
-// const User = new mongoose.model("User", userSchema)
-// app.post("/Login",(req,res)=>{
-//     const {userName,email,password} =req.body;
-//     User.findone({userName:userName},(err,user)=>{
-//         if(user){
-//            if(password === user.password && email===user.userName){
-//                res.send({message:"login sucess",user:user})
-//            }else{
-//                res.send({message:"wrong credentials"})
-//            }
-//         }else{
-//             res.send("not register")
-//         }
-//     })
-// });
-// app.post("/Register",(req,res)=>{
-//     console.log(req.body) 
-//     const {firstName,secondName,userName,email,password} =req.body;
-//     User.findOne({email:email},(err,user)=>{
-//         if(user){
-//             res.send({message:"user already exist"})
-//         }else {
-//             const user = new User({firstName,secondName,userName,email,password})
-//             user.save(err=>{
-//                 if(err){
-//                     res.send(err)
-//                 }else{
-//                     res.send({message:"sucessfull"})
-//                 }
-//             })
-//         }
-//     })
-// }) 
 app.listen(4000,(req,res)=>{
     console.log("server 4000 is running...")
 })
-
-
-
-
-
-
-app.use(cookieParser());
-app.use(express.json())
-app.use('/',authRoutes);

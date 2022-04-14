@@ -2,63 +2,47 @@ import React, { useState } from "react";
 
 import axios from "axios";
 
-import {useNavigate} from "react-router-dom";
+// import {useNavigate} from "react-router-dom";
 
-import { ToastContainer,toast } from "react-toastify";
+import {showErrMsg,showSuccessMsg} from "../utilities/Notification/Notification";
+
 const Login = () => {
-  const navigate = useNavigate();
+
 
   const [user, setUser] = useState({
     email:"",
     password: "",
+    err:"",
+    success:""
   });
-  const {email,password} = user;
-  const generateError = (err) =>{
-    toast.error(err,{
-      position:"bottom-right",
-    })
-  } 
+  const {email,password,err,success} = user;
+
+
+  // const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({
       ...user, //spread operator
-      [name]: value,
+      [name]: value,err:'' ,success: '' 
     });
   };
   const handleSubmit = async(e) => {
     e.preventDefault();
-    try{
-      const {data}= await axios.get("http://localhost:4000/Login", {
-        ...user
-    });
-    if(data){
-      if(data.errors){
-        const {userName,email,password} = data.errors;
-        if(userName) generateError(userName)
-        else if(email) generateError(email)
-        else if (password) generateError(password)
-
-
-      }
-      else{
-        navigate("/products")
-      }
-    }
-
+ 
+     try {
+        const res = await axios.post('http://localhost:4000/login',{email,password})
+        setUser({...user,err:"",success:res.data.msg})
+        localStorage.setItem('firstLogin',true)
+     } catch (error) {
+       error.response.data.msg && 
+       setUser({...user,err:error.response.data.msg,success:''})  
+     }
 
   }
-    catch(error){
-      console.log(error);
 
-    }
-    
-    //   console.log(res.data.message);
-  };
 
-  // const { register,formState: { errors }, handleSubmit } = useForm({
-  //   mode:"onTouched"
-  // });
-  // const onSubmit = data => console.log(data);
+
+  
 
   return (
     <>
@@ -81,6 +65,8 @@ const Login = () => {
             <div className="col-md-12">
               <div className="section-heading">
                 <h2>Login here</h2>
+                {err && showErrMsg(err)}
+                {success && showSuccessMsg(success)}
               </div>
             </div>
             <div className="col-md-8">
@@ -91,7 +77,7 @@ const Login = () => {
                       <fieldset>
                         <input
                           onChange={handleChange}
-                        
+                          value={email}
                           name="email"
                           type="text"
                           className="form-control"
@@ -104,7 +90,7 @@ const Login = () => {
                       <fieldset>
                         <input
                           onChange={handleChange}
-                       
+                          value={password}
                           name="password"
                           type="password"
                           className="form-control"
@@ -118,7 +104,7 @@ const Login = () => {
         
                         target="_blank"
                         className="inline-flex items-center text-xs font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-100 dark:hover:text-white">
-                        <span className="ml-3">You don't have an account?<a href="/Register">click here!</a></span>
+                        <span className="ml-3">New Customer?<a href="/Register">Register!</a></span>
                       </a>
                       </div>
                     <div className="col-lg-12">
@@ -232,7 +218,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <ToastContainer/>
+
     </>
   );
 };

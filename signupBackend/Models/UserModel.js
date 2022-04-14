@@ -5,11 +5,13 @@ const userSchema = mongoose.Schema({
 
     userName:{
         type:String,
-        required:[true,"userName is required"]
+        required:[true,"userName is required"],
+        trim:true
     },
     email:{
         type:String,
         required:[true,"Your email is required"],
+        trim:true,
         unique:true
     },
     mobileNumber:{
@@ -21,42 +23,21 @@ const userSchema = mongoose.Schema({
         type:String,
         required:[true,"password is required"]
     },
-
+    role:{
+        type:Number,
+        default:0
+    },
+    cart:{
+        type:Array,
+        default:[]
+    },
     date:{
         type:Date,
         default:Date.now
     }
+},{
+    timestamps:true
 })
-userSchema.pre("save",async function(next){
 
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password,salt);
-    next;
 
-});
-userSchema.statics.login = async function(email,password){
-    const user = await this.findOne({email});
-    if(user){
-      
-            const auth = await bcrypt.compare(password,user);
-            if(auth){
-                return user;
-            }
-            throw Error ("Incorrect Password");
-            <div className="col-lg-12 col-md-12 col-sm-12">
-            <fieldset>
-              <input
-                name="name"
-                type="password"
-                className="form-control"
-                id="reenter_password"
-                placeholder="Reenter Password"
-              />
-            </fieldset>
-          </div> }
-        throw Error ("Incorrect email")
-        
-    
-}
-
-module.exports = mongoose.model('User',userSchema)
+module.exports = mongoose.model('Users',userSchema)

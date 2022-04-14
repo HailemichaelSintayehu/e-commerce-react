@@ -1,70 +1,81 @@
 import React,{useState} from "react";
 
-import { ToastContainer } from "react-bootstrap";
 
 import axios from "axios";
-import { toast } from "react-toastify";
+
 import { useNavigate } from "react-router-dom";
+
+import {showErrMsg,showSuccessMsg} from "../utilities/Notification/Notification";
+
+import {isEmail,isEmpty,isLength,isMatch,isMobileNumber} from "../utilities/validation/Validation"
 
 
 const Register = () =>{
-  const navigate = useNavigate();
+ 
     const [user, setUser] = useState(
         {
             userName:"",
             email:"",
             mobileNumber:"",
             password:"",
-            confirmPassword:""
+            confirmPassword:"",
+            err:"",
+            success:""
 
         })
-    const {userName,email,mobileNumber,password,confirmPassword} = user;
 
-        const generateError = (err) =>toast.error(err,{
-          position:"bottom-right"
-        })
-
-
+        const {userName,email,mobileNumber,password,confirmPassword,err,success} = user;
         const handleChange = event =>{
             const {name,value} = event.target
             setUser({
                 ...user,[name]:value
-            })
+            }) 
         }
         const handleSubmit = async(e) =>{
           e.preventDefault();
+          if(isEmpty(userName) && isEmpty(email) && isEmpty(password) && isEmpty(mobileNumber)){
+            return setUser({...user,err:"please fill in all fields",success:''})
+          }
+          if(!isEmail(email)){
+            return setUser({...user,err:"invalid emails",success:''})
+          }
+          // if(!isUserName(userName)){
+          //   return setUser({...user,err:"please enter valid userName"})
+          // }
+          if(!isMobileNumber(mobileNumber)){
+            return setUser({...user,err:"please enter a valid phonenumber",success:''})
+          }
+          if(!isLength(password)){
+            return setUser({...user,err:"password must be at least 6 characters",success:''})
+          }
+          if(!  isMatch(password,confirmPassword)){
+            return setUser({...user,err:"the password didnot match"})
+          }
           try {
-           
-            const {data} = await axios.post("http://localhost:4000/register",{
-              ...user,
-            },{
-              // withCredentials:true
-            });
-            if(data){
-              if(data.errors){
-                const {firstName,lastName,userName,email,mobileNumber,password} = data.errors;
-                if(firstName) generateError(firstName);
-                else if(lastName) generateError(lastName);
-                else if(userName) generateError(userName);
-                else if(email) generateError(email);
-                else if(mobileNumber) generateError(mobileNumber);
-                else if(password) generateError(password)
 
-              }
-              else{
-                navigate("/login")
-
-              }
-            }
-            console.log(data);
-          }
-          catch(error){
-            console.log(error)
-          }
-          
+              const res = await axios.post("http://localhost:4000/register",{
+                userName,email,mobileNumber,password
+              })
+              res.data.msg &&
+              setUser({...user,err:'',success:res.data.msg})
             
-        }
+          } catch (error) {
+            error.response.data.message &&
+            setUser({...user,err:error.response.data.message,success:""})
+            
+          }
+  
+            // if(userName && email && mobileNumber && password &&(password===confirmPassword)){
+            //   axios.post("http://localhost:4000/register",user)
+            //   .then(response => alert(response));
+            // }   
+            // else{
+            //   alert("Invalid input")
 
+            // }}
+  
+      
+        }
   return (  
       <>
   
@@ -90,6 +101,8 @@ const Register = () =>{
       <div className="col-md-12">
         <div className="section-heading">
           <h2>Register here</h2>
+          {err && showErrMsg(err)}
+          {success && showSuccessMsg(success) }
         </div>
       </div>
       <div className="col-md-8">
@@ -108,7 +121,7 @@ const Register = () =>{
                     id="user_name" 
                     placeholder="User Name" 
           />
-             {/* {errors.userName && <span style={{color: "red"}}>Your User Name is required</span>} */}
+             {/* {error.userName && <span style={{color: "red"}}>Your User Name is required</span>} */}
                 </fieldset>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12">
@@ -122,7 +135,7 @@ const Register = () =>{
                     id="email" 
                     placeholder="E-Mail Address"
                  />
-            {/* {errors.email && <span style={{color:"red"}}>your email is required or invalid</span>} */}
+            {/* {error.email && <span style={{color:"red"}}>your email is required or invalid</span>} */}
                 </fieldset>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12">
@@ -136,7 +149,7 @@ const Register = () =>{
                     id="phoneNumber" 
                     placeholder="your Phone Number"
                 />
-            {/* {errors.mobileNumber && <span style={{color:"red"}}>Your Mobile Number is required</span>} */}
+            {/* {error.mobileNumber && <span style={{color:"red"}}>Your Mobile Number is required</span>} */}
                 
                 </fieldset>
               </div>
@@ -151,7 +164,7 @@ const Register = () =>{
                     id="password_signin" 
                     placeholder="Your password"
                   />
-              {/* {errors.password && <span style={{color:"red"}}>password is required"</span>} */}
+              {/* {error.password && <span style={{color:"red"}}>password is required"</span>} */}
 
                 </fieldset>
               </div>
@@ -166,28 +179,24 @@ const Register = () =>{
                     id="reenter_password_signin" 
                     placeholder="Reenter your password"
                  />
-              {/* {errors.confirmPassword && <span style={{color: "red"}}> your confirmPassword is required  </span>} */}
+              {/* {error.confirmPassword && <span style={{color: "red"}}> your confirmPassword is required  </span>} */}
                 </fieldset>
               </div>
               <div className="col-lg-12">
                 <fieldset>
                   <button type="submit" id="form-submit" className="filled-button" >Signin</button>
                 </fieldset>
+                <p>Already an acount? <a href="/login">login</a></p>
               </div>
             </div>
           </form>
-          <ToastContainer/>
+
         </div>
       </div>
   </div>
   </div>
 </div>
-{/* <span class="justify-center text-sm text-center text-gray-500 flex-items-center dark:text-gray-400">
-        Already have an account ?
-        <a href="#" target="_blank" class="text-sm text-blue-500 underline hover:text-blue-700">
-            Sign in
-        </a>
-</span> */}
+
 <div className="happy-clients">
   <div className="container">
     <div className="row">
@@ -226,8 +235,6 @@ const Register = () =>{
     </div>
   </div>
 </div>
-
-<ToastContainer/>
 
 
 
