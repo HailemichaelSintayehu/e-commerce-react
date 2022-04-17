@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "./pages/home";
+import Home from "./pages/mainpages/home";
 // import ProductList from "./components/product_list";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import Navigation from "./contents /Navbar/navbar";
@@ -8,35 +8,41 @@ import Home from "./pages/home";
 // import "./App.css";
 // import { BrowserRouter as Router } from "react-router-dom";
 
-import { BrowserRouter , Routes, Route } from "react-router-dom";
-import Products from "./pages/products";
-import Aboutus from "./pages/aboutus";
-import Login from "./pages/login";
-import Register from "./pages/register"
-import Navbar from "./components/navbar"
-import Footer from "./components/footer";   
-import ActivationEmail from "./auth/ActivationEmail";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Products from "./pages/mainpages/products";
+import ProductDetails from "./pages/productDetails/productDetails";
 
+import Aboutus from "./pages/mainpages/aboutus";
+import Login from "./pages/mainpages/login";
+import Register from "./pages/mainpages/register";
+import Navbar from "./components/navbar";
+import Footer from "./components/footer";
+import Cart from "./pages/cart/cart"
+import NotFound from "./pages/utilities/NotFound/notfound"
+// import ActivationEmail from "./auth/ActivationEmail";
+import { DataProvider } from "./GlobalState";
 function App() {
   return (
-      <>
-        
+    <>
       <BrowserRouter>
-      <Navbar/>
-       
-    <Routes>
-        <Route path="/" element = {<Home/>}/>
-        <Route path= "/products" element = { <Products />}/>
-        <Route path="/aboutus" element = { <Aboutus />}/>
-        <Route path="/login" element = { <Login />}/>
-        <Route path="/register" element = {<Register/>}/>
-        <Route path="/activate/:activation_token" element={<ActivationEmail/>}/>
-       
-     </Routes>
-        <Footer/>
+        <Navbar />
+        <DataProvider>
+          <Routes>
+            <Route path = "/" element = {<Home />} />
+            <Route path = "/products" element = {<Products />} /> 
+            <Route path = "/detail/:id" element = {<ProductDetails />} />
+            <Route path = "/aboutus" element = {<Aboutus />} /> 
+            <Route path = "/login" element = {<Login />} />
+            <Route path = "/register" element = {<Register />} />
+            <Route path = "/cart" element = {<Cart/>} />
+
+            <Route path="*" element = {<NotFound/>} />
+            {/* <Route path="/activate/:activation_token" element={<ActivationEmail/>}/> */}
+          </Routes>
+        </DataProvider>
+        <Footer />
       </BrowserRouter>
-      </>
-  
+    </>
   );
 }
 
