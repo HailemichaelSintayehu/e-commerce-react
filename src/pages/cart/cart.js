@@ -4,7 +4,7 @@ import "../../css/cart.css"
 
 function Cart() {
   return (
-    <div className="cart">Cart component</div>
+    <div className = "cart">Cart component</div>
   )
 }
 

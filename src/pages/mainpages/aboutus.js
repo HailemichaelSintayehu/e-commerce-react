@@ -3,6 +3,7 @@ import Yared from "../../images/yared.jpg"
 import Michael from "../../images/michael.JPG"
 import Body from  "../../images/bodyyy.jpg"
 import Bisrat from "../../images/bisre.jpg"
+import Misikir from "../../images/mise2.jpg"
 const Aboutus = () => {
     return (
         <>
@@ -128,7 +129,7 @@ const Aboutus = () => {
       <div className="col-md-4">
         <div className="team-member">
           <div className="thumb-container">
-            <img src="assets/images/team_04.jpg" alt=""/>
+            <img src = {Misikir} alt=""/>
             <div className="hover-effect">
               <div className="hover-content">
                 <ul className="social-icons">
@@ -142,7 +143,7 @@ const Aboutus = () => {
           </div>
           <div className="down-content">
             <h4>Misikir Zewdu</h4>
-            <span>Product Specialist</span>
+            <span>G.Manager @ MZ Architect</span>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing itaque corporis nulla.</p>
           </div>
         </div>
