@@ -1,44 +1,47 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 
-import {GlobalState} from "../../GlobalState"
+import { GlobalState } from "../../GlobalState";
 
-import ProductItem  from "../../ProductItem/productItem";
+import ProductItem from "../../ProductItem/productItem";
+
+import Loading from "../utilities/Loading/Loading";
 
 // import "../../css/products.css"
 
 const Products = () => {
- 
-    const state = useContext(GlobalState)
+  const state = useContext(GlobalState);
 
-    const [products] = state.ProductsApi.products
+  const [products] = state.ProductsApi.products;
 
-    console.log("the value of the products:",products);
+  console.log("the value of the products:", products);
 
-    return (
-        <div className="products">
-            <div className="products">
+  return (
+    <>
+    <div className="products">
+      <div className="products">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
               <div className="filters"></div>
             </div>
-            
- {
-  products.map(product =>{
-    return (<div className="col-md-4">
-    <div className="filters-content">
-      <div className="row grid"></div> 
-      <ProductItem key={product._id} product = {product} />
-              </div>
-            </div>
-    )
-  })
-}
-</div>
+
+            {products.map((product) => {
+              return (
+                <div className="col-md-4">
+                  <div className="filters-content">
+                    <div className="row grid"></div>
+                    <ProductItem key={product._id} product={product} />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
-/* <div className="page-heading products-heading header-text">
+    </div>
+    {products.length === 0 && <Loading/>} 
+  </>
+    /* <div className="page-heading products-heading header-text">
   <div className="container">
     <div className="row">
       <div className="col-md-12">
@@ -195,7 +198,6 @@ const Products = () => {
 
 
 </div> */
-    );
-
-}
+  );
+};
 export default Products;

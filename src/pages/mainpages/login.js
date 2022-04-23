@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import axios from "axios";
 
+import { Link } from "react-router-dom";
+
 // import {useNavigate} from "react-router-dom";
 
 import {showErrMsg,showSuccessMsg} from "../utilities/Notification/Notification";
@@ -31,8 +33,13 @@ const Login = () => {
  
      try {
         const res = await axios.post('http://localhost:4000/login',{email,password})
+
         setUser({...user,err:"",success:res.data.msg})
-        localStorage.setItem('firstLogin',true)
+
+        localStorage.setItem('firstLogin',true) 
+
+        window.location.href = "/products"
+
      } catch (error) {
        error.response.data.msg && 
        setUser({...user,err:error.response.data.msg,success:''})  
@@ -104,7 +111,7 @@ const Login = () => {
         
                         target="_blank"
                         className="inline-flex items-center text-xs font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-100 dark:hover:text-white">
-                        <span className="ml-3">New Customer?<a href="/Register">Register!</a></span>
+                        <span className="ml-3">New Customer?<Link to = "/Register">Register!</Link></span>
                       </a>
                       </div>
                     <div className="col-lg-12">

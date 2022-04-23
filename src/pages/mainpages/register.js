@@ -3,7 +3,7 @@ import React,{useState} from "react";
 
 import axios from "axios";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {showErrMsg,showSuccessMsg} from "../utilities/Notification/Notification";
 
@@ -48,7 +48,7 @@ const Register = () =>{
           if(!isLength(password)){
             return setUser({...user,err:"password must be at least 6 characters",success:''})
           }
-          if(!  isMatch(password,confirmPassword)){
+          if(! isMatch(password,confirmPassword)){
             return setUser({...user,err:"the password didnot match"})
           }
           try {
@@ -58,22 +58,16 @@ const Register = () =>{
               })
               res.data.msg &&
               setUser({...user,err:'',success:res.data.msg})
+
+              localStorage.setItem('firstLogin',true)
+
+              window.location.href = "/products"
             
           } catch (error) {
-            error.response.data.message &&
-            setUser({...user,err:error.response.data.message,success:""})
+            error.response.data.msg &&
+            setUser({...user,err:error.response.data.msg,success:""})
             
           }
-  
-            // if(userName && email && mobileNumber && password &&(password===confirmPassword)){
-            //   axios.post("http://localhost:4000/register",user)
-            //   .then(response => alert(response));
-            // }   
-            // else{
-            //   alert("Invalid input")
-
-            // }}
-  
       
         }
   return (  
@@ -186,7 +180,7 @@ const Register = () =>{
                 <fieldset>
                   <button type="submit" id="form-submit" className="filled-button" >Signin</button>
                 </fieldset>
-                <p>Already an acount? <a href="/login">login</a></p>
+                <p>Already an acount? <Link to = "/login">login</Link></p>
               </div>
             </div>
           </form>
