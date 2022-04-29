@@ -6,14 +6,19 @@ import ProductItem from "../../ProductItem/productItem";
 
 import Loading from "../utilities/Loading/Loading";
 
-// import "../../css/products.css"
 
 const Products = () => {
   const state = useContext(GlobalState);
 
+  console.log("the value of state in productjs:",state)
+
   const [products] = state.ProductsApi.products;
 
-  console.log("the value of the products:", products);
+  console.log("the value of the products in product js:", products);
+  
+  const [isAdmin] = state.userAPI.isAdmin;
+ 
+ 
 
   return (
     <>
@@ -30,7 +35,8 @@ const Products = () => {
                 <div className="col-md-4">
                   <div className="filters-content">
                     <div className="row grid"></div>
-                    <ProductItem key={product._id} product={product} />
+                    <ProductItem key={product._id} product = {product}
+                     isAdmin = {isAdmin}/>
                   </div>
                 </div>
               );

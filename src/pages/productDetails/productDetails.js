@@ -45,7 +45,7 @@ function ProductDetails() {
           <p style={{ color: "blue" }}>Sold: {detailProduct.sold}</p>
 
           <Link to="/cart" className="cart">
-            Buy Now
+            Add to Cart
           </Link>
         </div>
       </div>

@@ -8,6 +8,7 @@ function ProductsApi() {
     const getProducts = async() =>{
         const res = await axios.get("http://localhost:4000/checkProducts/products")
         setProducts(res.data.products)
+        console.log("res.data.products in proAPI:",res.data.products)
   
     }  
     useEffect(() => { 

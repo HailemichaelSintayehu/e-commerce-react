@@ -25,18 +25,22 @@ const Login = () => {
     const { name, value } = e.target;
     setUser({
       ...user, //spread operator
-      [name]: value,err:'' ,success: '' 
+      [name]: value,err:'' ,success: ''  
     });
   };
   const handleSubmit = async(e) => {
     e.preventDefault();
  
      try {
-        const res = await axios.post('http://localhost:4000/login',{email,password})
+        const res = await axios.post('http://localhost:4000/login',{email,password, withCredentials:true})
+        
+        console.log("the value of res in login:",res) 
 
         setUser({...user,err:"",success:res.data.msg})
 
         localStorage.setItem('firstLogin',true) 
+        localStorage.setItem('accesst',res.data.accesstoken) 
+        localStorage.setItem('refresht',res.data.refreshtoken) 
 
         window.location.href = "/products"
 

@@ -21,7 +21,7 @@ router.get("/logout",useCtrl.logout)
 
 router.get("/refresh_token",useCtrl.refreshToken)
 
-router.get("/infor",auth,useCtrl.getUser)
+router.get("/infor" ,auth,useCtrl.getUser)
 
 router.post("/forgotpassword",useCtrl.forgotPassword)
 
@@ -30,9 +30,9 @@ router.post("/reset",auth,useCtrl.resetPassword)
 
 router.get("/all_info",auth,authAdmin,useCtrl.getUsersAllInfo)
 
-router.patch("/update",auth,useCtrl.updateUser)
+router.patch("/update",auth,authAdmin,useCtrl.updateUser)
 
-router.delete("/delete",auth,useCtrl.deleteUser)
+router.delete("/delete",auth,authAdmin,useCtrl.deleteUser)
 
 module.exports = router;
  

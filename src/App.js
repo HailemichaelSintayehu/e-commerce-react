@@ -25,8 +25,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Navbar />
         <DataProvider>
+        <Navbar />
           <Routes>
             <Route path = "/" element = {<Home />} />
             <Route path = "/products" element = {<Products />} /> 

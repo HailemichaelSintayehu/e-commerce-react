@@ -1,16 +1,16 @@
 
 const router= require("express").Router()
 const productCtrl = require("../Controllers/productController");
-// const authAdmin = require("../Middlewares/authAdmin");
-// const auth = require("../Middlewares/auth");
+const authAdmin = require("../Middlewares/authAdmin");
+const auth = require("../Middlewares/auth");
 
 router.route("/products")
   .get(productCtrl.getProducts)
-  .post(productCtrl.createProducts)
+  .post(auth,authAdmin,productCtrl.createProducts)
 
 router.route("/products/:id")
-   .delete(productCtrl.deleteProducts)
-   .put(productCtrl.updateProducts)  
+   .delete(auth,authAdmin,productCtrl.deleteProducts)
+   .put(auth,authAdmin,productCtrl.updateProducts)  
 
 
 module.exports = router;

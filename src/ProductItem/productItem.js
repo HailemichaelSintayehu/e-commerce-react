@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../css/productItem.css";
 import ProductDetails from "../pages/productDetails/productDetails";
 import Btnrender from "./Btnrender";
-function ProductItem({ product }) {
+function ProductItem({product,isAdmin }) {
   return (
     // <div className='"product-card'>
     //     <img src = {product.images.url} alt = "" />
@@ -28,6 +28,9 @@ function ProductItem({ product }) {
     
                   <div className="col-lg-4 col-md-4 all des">
                     <div className="product-item">
+                      {
+                        isAdmin && <input type = "checkbox" checked = {product.checked} /> 
+                      }
                       <a href="#">
                         <img src={product.images.url} alt="" />
                       </a>
