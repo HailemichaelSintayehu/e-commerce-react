@@ -23,6 +23,8 @@ router.get("/refresh_token",useCtrl.refreshToken)
 
 router.get("/infor" ,auth,useCtrl.getUser)
 
+router.patch("/addcart ",auth,useCtrl.addCart)
+
 router.post("/forgotpassword",useCtrl.forgotPassword)
 
 router.post("/reset",auth,useCtrl.resetPassword)

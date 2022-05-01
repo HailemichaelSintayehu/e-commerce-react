@@ -14,14 +14,14 @@ import axios from "axios";
 function Navbar(){
         const state = useContext(GlobalState);
         console.log("the value of state nav",state);
-        const [isLogged,setIslogged] = state.userAPI.isLogged;
-        const [isAdmin,setIsAdmin] = state.userAPI.isAdmin  
+        const [isLogged] = state.userAPI.isLogged;
+        const [isAdmin] = state.userAPI.isAdmin  
+        const [cart] = state.userAPI.cart
         
         const logoutUser = async () =>{
           await axios.get("http://localhost:4000/logout")
           localStorage.clear()
-          setIsAdmin(false)
-          setIslogged(false)
+        window.location.href("/")
       
         }
         const adminRouter = () =>{ 
@@ -104,7 +104,7 @@ function Navbar(){
                         {
                           isAdmin ? '':
                           <li className="cart-icon" >
-                          <span>0</span>
+                          <span>{cart.length}</span>
                          <Link className= "nav-link" to =  "/cart"  component = {Cart}>
                             <img src = {CartImage} alt = "" width = "30px" padding = "10px" backgroundColor = "white" />
                          </Link>

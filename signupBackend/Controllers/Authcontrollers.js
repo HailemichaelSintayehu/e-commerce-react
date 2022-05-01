@@ -147,6 +147,24 @@ getUser: async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 },
+addCart:async (req,res) =>{
+  try {
+    const user = await UserModel.findById(req.user.id);
+    if(!user){
+      return res.status(400).json({msg:"user does not exist"})
+    }
+    await UserModel.findByIdAndUpdate({_id:req.user.id},{
+      cart:req.body.cart
+    })
+
+    return res.json({msg:"Added to cart"})
+
+  } catch (error) {
+
+    return res.status(400).json({msg:""})
+    
+  }
+},
   forgotPassword: async (req, res) => {
     try {
       const { email } = req.body;
