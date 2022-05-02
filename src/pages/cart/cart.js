@@ -4,9 +4,10 @@ import "../../css/cart.css";
 
 import { GlobalState } from "../../GlobalState";
 
-import { Link } from "react-router-dom";
-
 import axios from "axios";
+
+import Paypal from "./paypal"
+
 function Cart() {
   const state = useContext(GlobalState);
 
@@ -74,6 +75,9 @@ const removeProduct = (id) => {
     addToCart()
   }
 }
+const transSuccess = (payment) =>{
+  console.log(payment);
+}
   console.log("the value of cart in cart js:", cart);
 
   if (cart.length === 0) {
@@ -116,7 +120,8 @@ const removeProduct = (id) => {
       ))}
       <div className = "total">
         <h3>Total: ${total}</h3>
-        <Link to = "#!">Payment</Link>
+      <Paypal 
+      transSuccess = {transSuccess}/>
       </div>
     </>
   );

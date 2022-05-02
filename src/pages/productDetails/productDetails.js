@@ -7,6 +7,7 @@ import "../../css/productDetails.css";
 
 import ProductItem from "../../ProductItem/productItem";
 
+
 function ProductDetails() {
   const params = useParams();
   const state = useContext(GlobalState);
@@ -15,6 +16,9 @@ function ProductDetails() {
   const [products] = state.ProductsApi.products;
 
   const [detailProduct, setDetailProuduct] = useState([]);
+
+  const addCart = state.userAPI.addCart;
+  
   useEffect(() => {
     console.log("re render");
     if (params.id) {
@@ -44,7 +48,9 @@ function ProductDetails() {
           <p>{detailProduct.content}</p>
           <p style={{ color: "blue" }}>Sold: {detailProduct.sold}</p>
 
-          <Link to="/cart" className="cart">
+          <Link to="/cart" 
+          className="cart"
+          onClick = {() => addCart(detailProduct)}>
             Add to Cart
           </Link>
         </div>

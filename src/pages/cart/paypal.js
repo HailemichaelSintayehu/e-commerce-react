@@ -1,11 +1,12 @@
 import React from 'react';
 import PaypalExpressBtn from 'react-paypal-express-checkout';
  
-export default class MyApp extends React.Component {
+export default class Paypal extends React.Component {
     render() {
         const onSuccess = (payment) => {
             // Congratulation, it came here means everything's fine!
             		console.log("The payment was succeeded!", payment);
+                    this.props.transSuccess(payment);
             		// You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
         }
  
@@ -24,11 +25,11 @@ export default class MyApp extends React.Component {
  
         let env = 'sandbox'; // you can set here to 'production' for production
         let currency = 'USD'; // or you can set this value from your props or state
-        let total = 1; // same as above, this is the total amount (based on currency) to be paid by using Paypal express checkout
+        let total = this.props.total; // same as above, this is the total amount (based on currency) to be paid by using Paypal express checkout
         // Document on Paypal's currency code: https://developer.paypal.com/docs/classic/api/currency_codes/
  
         const client = {
-            sandbox:    'YOUR-SANDBOX-APP-ID',
+            sandbox:    'AbGh3kJNNecuo4E70moD-rxHPoFnaN4nUR_D1yi08075Agu_3H2n2gs-AUiLyHCEslHR5Prwk_QbkXN6',
             production: 'YOUR-PRODUCTION-APP-ID',
         }
         // In order to get production's app-ID, you will have to send your app to Paypal for approval first
@@ -39,7 +40,13 @@ export default class MyApp extends React.Component {
  
         // NB. You can also have many Paypal express checkout buttons on page, just pass in the correct amount and they will work!
         return (
-            <PaypalExpressBtn env={env} client={client} currency={currency} total={total} onError={onError} onSuccess={onSuccess} onCancel={onCancel} />
+            <PaypalExpressBtn env={env} 
+            client={client} 
+            currency={currency} 
+            total={total} 
+            onError={onError} 
+            onSuccess={onSuccess} 
+            onCancel={onCancel} />
         );
     }
 }
