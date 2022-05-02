@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useContext} from "react";
 import Home from "./pages/mainpages/home";
 // import ProductList from "./components/product_list";
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,7 +7,7 @@ import Home from "./pages/mainpages/home";
 // import Sidebar from "./contents /sidebar";
 // import "./App.css";
 // import { BrowserRouter as Router } from "react-router-dom";
-
+import { GlobalState } from "./GlobalState";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Products from "./pages/mainpages/products";
 import ProductDetails from "./pages/productDetails/productDetails";
@@ -22,6 +22,9 @@ import NotFound from "./pages/utilities/NotFound/notfound"
 // import ActivationEmail from "./auth/ActivationEmail";
 import { DataProvider } from "./GlobalState";
 function App() {
+
+   const state = useContext(GlobalState);
+  //  const [isLogged] = state.userAPI.isLogged;
   return (
     <>
       <BrowserRouter>
@@ -32,7 +35,7 @@ function App() {
             <Route path = "/products" element = {<Products />} /> 
             <Route path = "/detail/:id" element = {<ProductDetails />} />
             <Route path = "/aboutus" element = {<Aboutus />} /> 
-            <Route path = "/login" element = {<Login />} />
+            <Route path = "/login" element = { <Login />} />
             <Route path = "/register" element = {<Register />} />
             <Route path = "/cart" element = {<Cart/>} />
 

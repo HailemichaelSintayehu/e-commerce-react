@@ -14,14 +14,15 @@ import axios from "axios";
 function Navbar(){
         const state = useContext(GlobalState);
         console.log("the value of state nav",state);
-        const [isLogged] = state.userAPI.isLogged;
-        const [isAdmin] = state.userAPI.isAdmin  
+        const [isLogged,setIslogged] = state.userAPI.isLogged;
+        const [isAdmin,setIsAdmin] = state.userAPI.isAdmin  
         const [cart] = state.userAPI.cart
         
         const logoutUser = async () =>{
           await axios.get("http://localhost:4000/logout")
           localStorage.clear()
-        window.location.href("/")
+          setIsAdmin(false)
+          setIslogged(false)
       
         }
         const adminRouter = () =>{ 
