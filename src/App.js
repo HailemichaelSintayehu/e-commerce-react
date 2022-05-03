@@ -1,12 +1,5 @@
 import React,{useState,useContext} from "react";
 import Home from "./pages/mainpages/home";
-// import ProductList from "./components/product_list";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import Navigation from "./contents /Navbar/navbar";
-// import Details from "./components/details";
-// import Sidebar from "./contents /sidebar";
-// import "./App.css";
-// import { BrowserRouter as Router } from "react-router-dom";
 import { GlobalState } from "./GlobalState";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Products from "./pages/mainpages/products";

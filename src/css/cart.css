@@ -1,16 +1,43 @@
 .cart {
- position: relative;
- border:1px solid #ccc;
- transform: scale(0.98);
- padding-top: 200px;
- padding-right: 500px;
- padding-bottom: 100px;
- padding-left: 300px;
- position:relative
-
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding:50px;
+    font-size: 150%
+}
+.cart img{
+    max-width: 400px;
+    width: 100%;
+    margin:20px;
+    padding-top: 40px;
+    height: 450px;
+    object-fit: cover;
+    display:block;
+}
+.box-detail {
+    max-width: 500px;
+    width: 100%;
+    margin: 10px 20px; 
+}
+.box-detail .row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 40px;
+    margin-left: 55px;
 }
 .box-detail h2{
-    padding-top: 100px;
+    text-transform: uppercase;
+    color:darkblue;
+    letter-spacing:2px;
+    font-weight: 2rem;
+
+}
+.box-detail .row span{
+    line-height: 1.5;
+    margin:10px 0;
+    opacity: 0.8;
 
 }
 .amount span {

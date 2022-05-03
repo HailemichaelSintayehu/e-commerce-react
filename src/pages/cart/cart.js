@@ -108,8 +108,11 @@ const transSuccess = (payment) =>{
           />
 
           <div className = "box_detail">
-            <h2>{cartProducts.title}</h2>
-            <span>Price in Dollar:  {cartProducts.price * cartProducts.quantity}$ </span>
+             <div className = "row">
+
+                <h2>{cartProducts.title}</h2>
+                <span>Price in Dollar:  {cartProducts.price * cartProducts.quantity}$ </span>
+             </div>
             <p>{cartProducts.description}</p>
             <p>{cartProducts.content}</p>
             <div className = "amount">

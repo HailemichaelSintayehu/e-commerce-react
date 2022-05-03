@@ -36,8 +36,8 @@ function ProductDetails() {
       <div className="product_detail">
         <img src={detailProduct.images.url} alt="" />
 
-        <div className="box_detail">
-          <div className="row">
+        <div className = "box_detail">
+          <div className = "row">
 
             <h2>{detailProduct.title}</h2>
             <h6>#id: {detailProduct.product_id}</h6>
@@ -46,20 +46,20 @@ function ProductDetails() {
           <span>${detailProduct.price}</span>
           <p>{detailProduct.description}</p>
           <p>{detailProduct.content}</p>
-          <p style={{ color: "blue" }}>Sold: {detailProduct.sold}</p>
+          <p style = {{ color: "blue" }}>Sold: {detailProduct.sold}</p>
 
-          <Link to="/cart" 
-          className="cart"
+          <Link to = "/cart" 
+          className = "cart"
           onClick = {() => addCart(detailProduct)}>
             Add to Cart
           </Link>
         </div>
       </div>
-      <div className="products">
+      <div className = "products">
         <h2>Related Products</h2>
         {products.map((product) => {
           return product.category === detailProduct.category ? (
-            <ProductItem key={product._id} product={product} />
+            <ProductItem key={product._id} product = {product} />
           ) : null;
         })}
       </div>
