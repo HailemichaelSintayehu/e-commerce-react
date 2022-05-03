@@ -19,6 +19,7 @@ import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import Cart from "./pages/cart/cart"
 import NotFound from "./pages/utilities/NotFound/notfound"
+import History from "./pages/mainpages/history";
 // import ActivationEmail from "./auth/ActivationEmail";
 import { DataProvider } from "./GlobalState";
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route path = "/detail/:id" element = {<ProductDetails />} />
             <Route path = "/aboutus" element = {<Aboutus />} /> 
             <Route path = "/login" element = { <Login />} />
+            <Route path = "history" element = {<History/>}/>
             <Route path = "/register" element = {<Register />} />
             <Route path = "/cart" element = {<Cart/>} />
 

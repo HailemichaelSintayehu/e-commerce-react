@@ -77,6 +77,8 @@ const removeProduct = (id) => {
 }
 const transSuccess = (payment) =>{
   console.log(payment);
+  setCart([])
+  addToCart()
 }
   console.log("the value of cart in cart js:", cart);
 
@@ -98,7 +100,10 @@ const transSuccess = (payment) =>{
           <img
             src = {cartProducts.images.url}
             alt = ""
-            style = {{ width : "300", height : "300"}}
+            style = {{ width : "350px", height : "300",  display: "block",
+            marginLeft: "auto",
+            marginRight: "auto",
+            }}
             
           />
 
